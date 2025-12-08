@@ -3,6 +3,7 @@ import { useState } from "react"
 import { CATEGORIES, CATEGORIES_KEYS } from "../utils/categories";
 import { Input } from "../components/input"
 import { Select } from "../components/Select"
+import { Upload } from "../components/Upload";
 
 
 export function Refund(){
@@ -31,6 +32,8 @@ export function Refund(){
     <Input legend="Valor" required ></Input>
 
     </div>
+
+    <Upload />
 
     </form>
 }
