@@ -17,6 +17,9 @@ export function Refund(){
         <Input required
         legend="Nome da solicitação"
         />
+
+     <div className="flex gap-4">
+
         <Select required legend="Categoria" value={category} onChange={(e) => setCategory(e.target.value)}>
   {CATEGORIES_KEYS.map((category) => (
     <option key={category} value={category}>
@@ -25,6 +28,9 @@ export function Refund(){
      ))}
     </Select>
 
+    <Input legend="Valor" required ></Input>
+
+    </div>
 
     </form>
 }
