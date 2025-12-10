@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import { CATEGORIES, CATEGORIES_KEYS } from "../utils/categories";
 import { Input } from "../components/input"
@@ -17,10 +17,15 @@ export function Refund(){
     const [filename, setFilename] = useState<File | null>(null)
 
     const navigate = useNavigate()
+    const params = useParams<{ id: string }>();
 
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault()
+
+        if(params.id){
+            return navigate("-1")
+        }
        
         console.log(name, amount, category, filename)
         navigate("/confirm", {state: {fromSubmit: true }})
@@ -33,12 +38,12 @@ export function Refund(){
         </header>
 
         <Input required
-        legend="Nome da solicitação" value={name} onChange={(e) => setName(e.target.value)}
+        legend="Nome da solicitação" value={name} onChange={(e) => setName(e.target.value)} disabled={!!params.id}
         />
 
      <div className="flex gap-4">
 
-        <Select required legend="Categoria" value={category} onChange={(e) => setCategory(e.target.value)}>
+        <Select required legend="Categoria" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!!params.id} >
   {CATEGORIES_KEYS.map((category) => (
     <option key={category} value={category}>
       {CATEGORIES[category].name}
@@ -46,7 +51,7 @@ export function Refund(){
      ))}
     </Select>
 
-    <Input legend="Valor" required value={amount} onChange={(e) => setAmount(e.target.value)} ></Input>
+    <Input legend="Valor" required value={amount} onChange={(e) => setAmount(e.target.value)} disabled={!!params.id} ></Input>
 
     </div>
 
@@ -54,7 +59,7 @@ export function Refund(){
     onChange={(e) => e.target.files && setFilename(e.target.files[0])} />
 
     <Button type="submit" isLoading={isLoading}>
-        Enviar
+        { params.id ? "Voltar" : "Enviar" }
     </Button>
 
     </form>
